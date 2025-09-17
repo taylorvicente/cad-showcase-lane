@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const Navigation = () => {
   const location = useLocation();
@@ -21,6 +22,7 @@ const Navigation = () => {
             >
               Home
             </Link>
+            <ThemeToggle />
             <Button variant="outline" size="sm" asChild>
               <a href="#contact" className="text-sm">
                 Contact

@@ -1,11 +1,10 @@
 import { useParams } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Calendar, ExternalLink, Github, Tag } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
+import ProjectSection from "@/components/ProjectSection";
 import cadImage from "@/assets/project-cad-1.jpg";
 import robotImage from "@/assets/project-robot-arm.jpg";
 import aerospaceImage from "@/assets/project-aerospace.jpg";
@@ -19,9 +18,16 @@ const projectData = {
     tags: ["SolidWorks", "CAD", "Manufacturing", "Precision Engineering"],
     date: "2024",
     longDescription: "This project involved the complete design and analysis of precision mechanical components for industrial applications. Using advanced CAD software, I created detailed 3D models with complex geometries that meet strict manufacturing tolerances.",
-    challenges: ["Achieving sub-micron precision tolerances", "Optimizing for manufacturability", "Material selection for durability"],
-    technologies: ["SolidWorks 2024", "ANSYS Workbench", "GD&T Standards", "CNC Machining"],
-    outcomes: ["15% reduction in manufacturing cost", "Improved component lifespan by 30%", "Successfully prototyped and tested"],
+    context: "This was a personal project undertaken to demonstrate advanced CAD modeling capabilities for industrial applications. The goal was to design a high-precision mechanical bearing assembly that could withstand extreme operating conditions while maintaining sub-micron tolerances. The project was self-initiated to explore the intersection of theoretical engineering principles and practical manufacturing constraints.",
+    role: "As the sole designer and engineer on this project, I was responsible for all aspects from initial concept through final validation. My specific contributions included:\n\n• Complete geometric design and 3D modeling in SolidWorks\n• Finite element analysis and stress validation\n• Manufacturing process planning and tolerance specification\n• Material selection and supplier coordination\n• Prototype testing and validation protocols",
+    process: "The design process began with extensive research into existing bearing technologies and failure modes. I used SolidWorks to create parametric models that could be easily modified for different operating conditions. The design incorporates advanced features like optimized load distribution paths and integrated lubrication channels.",
+    reasoning: "I chose this particular geometry to maximize load capacity while minimizing material usage. The curved load paths distribute stress more evenly than traditional designs, reducing peak stresses by 25%. The integrated lubrication system eliminates the need for external grease fittings, reducing maintenance requirements and improving reliability in harsh environments. This design approach demonstrates both technical proficiency and practical engineering judgment.",
+    images: {
+      context: [cadImage],
+      role: [cadImage],
+      process: [cadImage, robotImage],
+      reasoning: [cadImage]
+    }
   },
   "robotics-arm": {
     title: "6-DOF Robotic Arm",
@@ -30,9 +36,16 @@ const projectData = {
     tags: ["Robotics", "Automation", "Control Systems", "Prototyping"],
     date: "2023",
     longDescription: "Designed and built a fully functional 6-degree-of-freedom robotic arm from the ground up, including mechanical design, control systems, and programming.",
-    challenges: ["Achieving precise positioning accuracy", "Minimizing vibration and backlash", "Developing inverse kinematics algorithms"],
-    technologies: ["MATLAB/Simulink", "Arduino", "Servo Motors", "3D Printing", "Machine Learning"],
-    outcomes: ["±0.1mm positioning accuracy", "Successfully integrated with vision system", "Demonstrated at engineering showcase"],
+    context: "This was a capstone project for my Mechanical Engineering degree, completed over two semesters. The objective was to design and build a robotic arm capable of precise manipulation tasks with repeatability better than ±0.1mm. The project had a $2,000 budget constraint and required integration with existing vision systems in our lab.",
+    role: "I served as the mechanical design lead in a team of four students. My primary responsibilities included:\n\n• Complete mechanical design and CAD modeling of all components\n• Actuator selection and integration\n• Structural analysis and optimization\n• Manufacturing coordination and assembly\n• Performance testing and calibration\n• Documentation and technical reporting",
+    process: "The development process started with kinematic analysis to optimize workspace and avoid singularities. I designed custom joint assemblies using aluminum extrusions and 3D-printed components to balance strength with weight. Each joint incorporates high-resolution encoders for precise position feedback. The modular design allows for easy maintenance and component replacement.",
+    reasoning: "I selected servo motors over stepper motors for better speed control and holding torque. The aluminum frame provides excellent strength-to-weight ratio while allowing for precise machining of bearing surfaces. The control architecture uses cascaded PID loops with feedforward compensation to achieve the required precision. This approach balances performance with cost-effectiveness, meeting all project requirements within budget.",
+    images: {
+      context: [robotImage],
+      role: [robotImage, aerospaceImage],
+      process: [robotImage, cadImage],
+      reasoning: [robotImage]
+    }
   },
   "aerospace-turbine": {
     title: "Aerospace Turbine Blade",
@@ -41,9 +54,16 @@ const projectData = {
     tags: ["Aerospace", "CFD Analysis", "Optimization", "Materials"],
     date: "2023",
     longDescription: "Conducted comprehensive aerodynamic optimization of turbine blade geometry using computational fluid dynamics and advanced materials analysis.",
-    challenges: ["High-temperature material constraints", "Complex aerodynamic optimization", "Structural integrity under extreme loads"],
-    technologies: ["ANSYS Fluent", "SolidWorks Flow Simulation", "Inconel 718", "Topology Optimization"],
-    outcomes: ["12% efficiency improvement", "Reduced material stress by 25%", "Patent application filed"],
+    context: "This project was conducted as part of an industry collaboration with a major aerospace manufacturer. The goal was to improve turbine blade efficiency by 10% while maintaining structural integrity under extreme operating conditions (temperatures up to 1200°C, rotational speeds of 12,000 RPM). The project duration was 6 months with stringent confidentiality requirements.",
+    role: "I was the primary CFD analyst and optimization engineer working under senior engineering supervision. My key contributions included:\n\n• Computational fluid dynamics modeling and simulation setup\n• Parametric geometry optimization using genetic algorithms\n• Thermal and structural analysis validation\n• Materials research for high-temperature applications\n• Performance correlation with experimental data\n• Technical documentation and patent application support",
+    process: "The optimization process used ANSYS Fluent for aerodynamic analysis coupled with genetic algorithms for shape optimization. I developed custom scripts to automate the design-analysis-optimization loop, testing over 500 geometric variations. The final design incorporates advanced cooling passages and optimized blade profiles that maintain aerodynamic efficiency while providing adequate structural strength.",
+    reasoning: "The blade geometry was optimized using multi-objective optimization targeting both aerodynamic efficiency and structural integrity. I chose Inconel 718 for its excellent high-temperature properties and fatigue resistance. The cooling passages follow a serpentine pattern that maximizes heat transfer while minimizing pressure losses. This design achieves 12% efficiency improvement over baseline while reducing peak blade temperatures by 50°C, significantly extending service life.",
+    images: {
+      context: [aerospaceImage],
+      role: [aerospaceImage, cadImage],
+      process: [aerospaceImage, robotImage],
+      reasoning: [aerospaceImage]
+    }
   },
 };
 
@@ -118,114 +138,35 @@ const ProjectDetail = () => {
             </div>
           </div>
 
-          <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="cad">3D Model</TabsTrigger>
-              <TabsTrigger value="analysis">Analysis</TabsTrigger>
-              <TabsTrigger value="gallery">Gallery</TabsTrigger>
-            </TabsList>
+          <div className="space-y-8">
+            <ProjectSection
+              title="Context"
+              content={project.context}
+              images={project.images.context}
+              isImageLeft={true}
+            />
             
-            <TabsContent value="overview" className="mt-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Challenges</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {project.challenges.map((challenge, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                          <span className="text-sm">{challenge}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Technologies</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {project.technologies.map((tech, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-engineering-blue rounded-full mt-2 flex-shrink-0" />
-                          <span className="text-sm">{tech}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Outcomes</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {project.outcomes.map((outcome, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0" />
-                          <span className="text-sm">{outcome}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
+            <ProjectSection
+              title="Your Role"
+              content={project.role}
+              images={project.images.role}
+              isImageLeft={false}
+            />
             
-            <TabsContent value="cad" className="mt-8">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Interactive 3D Model</CardTitle>
-                </CardHeader>
-                <CardContent className="h-96 bg-engineering-gray-light rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <p className="text-muted-foreground mb-4">
-                      3D CAD viewer will be integrated here
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      Future integration with Three.js or CAD viewers
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
+            <ProjectSection
+              title="Sketches, Pictures, and Videos"
+              content={project.process}
+              images={project.images.process}
+              isImageLeft={true}
+            />
             
-            <TabsContent value="analysis" className="mt-8">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Engineering Analysis</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4">
-                    Detailed stress analysis, fluid dynamics simulations, and optimization results.
-                  </p>
-                  <div className="h-64 bg-engineering-gray-light rounded-lg flex items-center justify-center">
-                    <p className="text-muted-foreground">Analysis charts and simulations</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="gallery" className="mt-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[1, 2, 3, 4, 5, 6].map((item) => (
-                  <Card key={item}>
-                    <CardContent className="p-0">
-                      <div className="h-48 bg-engineering-gray-light rounded-lg flex items-center justify-center">
-                        <p className="text-muted-foreground">Project Image {item}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
+            <ProjectSection
+              title="What, How, Why"
+              content={project.reasoning}
+              images={project.images.reasoning}
+              isImageLeft={false}
+            />
+          </div>
         </div>
       </main>
     </div>
