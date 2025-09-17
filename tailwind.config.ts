@@ -47,6 +47,12 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        engineering: {
+          blue: "hsl(var(--engineering-blue))",
+          "blue-dark": "hsl(var(--engineering-blue-dark))",
+          gray: "hsl(var(--engineering-gray))",
+          "gray-light": "hsl(var(--engineering-gray-light))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -57,6 +63,17 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      backgroundImage: {
+        "tech-gradient": "var(--tech-gradient)",
+        "surface-gradient": "var(--surface-gradient)",
+      },
+      boxShadow: {
+        "tech": "var(--shadow-tech)",
+        "elevated": "var(--shadow-elevated)",
+      },
+      transitionTimingFunction: {
+        "smooth": "var(--transition-smooth)",
       },
       borderRadius: {
         lg: "var(--radius)",
